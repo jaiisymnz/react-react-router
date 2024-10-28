@@ -4,7 +4,7 @@ import axios from "axios";
 function EditProductForm() {
   const params = useParams();
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [img, setImg] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();

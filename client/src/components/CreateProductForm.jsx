@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 function CreateProductForm() {
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [img, setImg] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
