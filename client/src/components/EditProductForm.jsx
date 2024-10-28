@@ -1,6 +1,33 @@
+import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 function EditProductForm() {
+  const params = useParams();
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [img, setImg] = useState("");
+  const [description, setDescription] = useState("");
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `http://localhost:4001/products/${params.productId}`,
+        {
+          name: name,
+          price: price,
+          image: img,
+          description: description,
+        }
+      );
+      alert("Edited data to server and go back to homepage");
+    } catch (error) {
+      console.log(error);
+    }
+    navigate("/");
+  };
   return (
-    <form className="product-form">
+    <form className="product-form" onSubmit={handleSubmit}>
       <h1>Edit Product Form</h1>
       <div className="input-container">
         <label>
@@ -10,7 +37,8 @@ function EditProductForm() {
             name="name"
             type="text"
             placeholder="Enter name here"
-            onChange={() => {}}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </label>
       </div>
@@ -22,7 +50,8 @@ function EditProductForm() {
             name="image"
             type="text"
             placeholder="Enter image url here"
-            onChange={() => {}}
+            value={img}
+            onChange={(e) => setImg(e.target.value)}
           />
         </label>
       </div>
@@ -34,7 +63,8 @@ function EditProductForm() {
             name="price"
             type="number"
             placeholder="Enter price here"
-            onChange={() => {}}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
           />
         </label>
       </div>
@@ -46,7 +76,8 @@ function EditProductForm() {
             name="description"
             type="text"
             placeholder="Enter description here"
-            onChange={() => {}}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             rows={4}
             cols={30}
           />

@@ -1,6 +1,30 @@
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 function CreateProductForm() {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [img, setImg] = useState("");
+  const [description, setDescription] = useState("");
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:4001/products`, {
+        name: name,
+        price: price,
+        image: img,
+        description: description,
+      });
+      alert("Submit data to server and go back to homepage");
+    } catch (error) {
+      console.log(error);
+    }
+    navigate("/");
+  };
+
   return (
-    <form className="product-form">
+    <form className="product-form" onSubmit={handleSubmit}>
       <h1>Create Product Form</h1>
       <div className="input-container">
         <label>
@@ -9,8 +33,11 @@ function CreateProductForm() {
             id="name"
             name="name"
             type="text"
+            value={name}
             placeholder="Enter name here"
-            onChange={() => {}}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
         </label>
       </div>
@@ -22,7 +49,10 @@ function CreateProductForm() {
             name="image"
             type="text"
             placeholder="Enter image url here"
-            onChange={() => {}}
+            value={img}
+            onChange={(e) => {
+              setImg(e.target.value);
+            }}
           />
         </label>
       </div>
@@ -34,7 +64,10 @@ function CreateProductForm() {
             name="price"
             type="number"
             placeholder="Enter price here"
-            onChange={() => {}}
+            value={price}
+            onChange={(e) => {
+              setPrice(e.target.value);
+            }}
           />
         </label>
       </div>
@@ -46,7 +79,10 @@ function CreateProductForm() {
             name="description"
             type="text"
             placeholder="Enter description here"
-            onChange={() => {}}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            value={description}
             rows={4}
             cols={30}
           />
